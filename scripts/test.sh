@@ -2,7 +2,7 @@
 # Compile all source and tests into out/, then run the JUnit tests.
 # With no argument, run every test JUnit finds. With one argument, run only
 # that test class, e.g.:
-#   scripts/test.sh complexity.IsSortedTest
+#   scripts/test.sh complexity.FibonacciTest
 # This script is the single place the classpath lives so you never have to
 # type it by hand.
 set -e
