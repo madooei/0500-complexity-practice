@@ -1,17 +1,16 @@
 package complexity;
 
-/**
- * A growable array of ints that also shrinks, halving the capacity as soon as
- * the array is half empty.
- */
-public class DynamicArrayShrinkAtHalf {
+/** A growable array of ints that also shrinks. */
+public class DynamicArray {
 
   private static final int MIN_CAPACITY = 10;
+  private static final int GROWTH_FACTOR = 2;  // grow multiplies capacity by this
+  private static final int SHRINK_FACTOR = 4;  // shrink when size is capacity / this
 
   private int[] arr;
   private int size;
 
-  public DynamicArrayShrinkAtHalf() {
+  public DynamicArray() {
     arr = new int[MIN_CAPACITY];
     size = 0;
   }
@@ -46,16 +45,16 @@ public class DynamicArrayShrinkAtHalf {
     throw new UnsupportedOperationException("TODO: Implement me");
   }
 
-  // Doubles the capacity.
+  // Multiplies the capacity by GROWTH_FACTOR.
   private void grow() {
-    int[] bigger = new int[arr.length * 2];
+    int[] bigger = new int[arr.length * GROWTH_FACTOR];
     for (int i = 0; i < size; i++) {
       bigger[i] = arr[i];
     }
     arr = bigger;
   }
 
-  // Halves the capacity.
+  // Divides the capacity by GROWTH_FACTOR.
   private void shrink() {
     // TODO: Implement me
     throw new UnsupportedOperationException("TODO: Implement me");
