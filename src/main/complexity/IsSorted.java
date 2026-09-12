@@ -7,9 +7,8 @@ public final class IsSorted {
     // This class should not be instantiated!
   }
 
-  // Returns true if arr is sorted in non-decreasing order, so equal neighbors
-  // are fine. Stops at the first out-of-order pair: best case O(1), worst
-  // case O(n). Empty and single-element arrays count as sorted.
+  // Assumes arr is not null. Returns true if arr is in non-decreasing order,
+  // so equal neighbors are fine.
   public static boolean isSorted(int[] arr) {
     // TODO: Implement me
     throw new UnsupportedOperationException("TODO: Implement me");

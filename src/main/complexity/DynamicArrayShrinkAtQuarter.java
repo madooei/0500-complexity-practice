@@ -1,9 +1,8 @@
 package complexity;
 
 /**
- * A growable array of ints that also shrinks, using the fixed rule: halve the
- * capacity only when the array is a quarter full. Every resize then leaves the
- * array half full, so add and removeLast are both O(1) amortized.
+ * A growable array of ints that also shrinks, halving the capacity only when
+ * the array is a quarter full.
  */
 public class DynamicArrayShrinkAtQuarter {
 
@@ -42,7 +41,6 @@ public class DynamicArrayShrinkAtQuarter {
   }
 
   // Removes and returns the last element. Throws if the array is empty.
-  // Shrinks only when the array is a quarter full.
   public int removeLast() {
     // TODO: Implement me
     throw new UnsupportedOperationException("TODO: Implement me");
