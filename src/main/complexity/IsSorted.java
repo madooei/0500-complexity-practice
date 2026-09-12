@@ -11,11 +11,7 @@ public final class IsSorted {
   // are fine. Stops at the first out-of-order pair: best case O(1), worst
   // case O(n). Empty and single-element arrays count as sorted.
   public static boolean isSorted(int[] arr) {
-    for (int i = 1; i < arr.length; i++) {
-      if (arr[i - 1] > arr[i]) {
-        return false;
-      }
-    }
-    return true;
+    // TODO: Implement me
+    throw new UnsupportedOperationException("TODO: Implement me");
   }
 }

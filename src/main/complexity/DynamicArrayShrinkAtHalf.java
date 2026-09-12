@@ -44,16 +44,8 @@ public class DynamicArrayShrinkAtHalf {
   // Removes and returns the last element. Throws if the array is empty.
   // Shrinks as soon as the array is half empty.
   public int removeLast() {
-    if (size == 0) {
-      throw new IllegalStateException();
-    }
-    size--;
-    int value = arr[size];
-    arr[size] = 0;           // clear the now-unused slot
-    if (size == arr.length / 2 && arr.length > MIN_CAPACITY) {
-      shrink();
-    }
-    return value;
+    // TODO: Implement me
+    throw new UnsupportedOperationException("TODO: Implement me");
   }
 
   // Doubles the capacity.
@@ -67,10 +59,7 @@ public class DynamicArrayShrinkAtHalf {
 
   // Halves the capacity.
   private void shrink() {
-    int[] smaller = new int[arr.length / 2];
-    for (int i = 0; i < size; i++) {
-      smaller[i] = arr[i];
-    }
-    arr = smaller;
+    // TODO: Implement me
+    throw new UnsupportedOperationException("TODO: Implement me");
   }
 }
