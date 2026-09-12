@@ -4,8 +4,10 @@ package complexity;
 public class DynamicArray {
 
   private static final int MIN_CAPACITY = 10;
-  private static final int GROWTH_FACTOR = 2;  // grow multiplies capacity by this
-  private static final int SHRINK_FACTOR = 4;  // shrink when size is capacity / this
+  // grow multiplies the capacity by this, and shrink divides it by this
+  private static final int GROWTH_FACTOR = 2;
+  // shrink fires when size falls to capacity / SHRINK_FACTOR
+  private static final int SHRINK_FACTOR = 4;
 
   private int[] arr;
   private int size;
