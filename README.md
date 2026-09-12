@@ -32,12 +32,15 @@ code/
         DynamicArrayShrinkAtHalfTest.java
         DynamicArrayShrinkAtQuarterTest.java
   scripts/
-    test.sh                               # compile everything and run the full JUnit suite
+    test.sh                               # compile everything and run the JUnit tests
 ```
 
 ## How to compile and run
 
 - `scripts/test.sh` — compiles everything and runs the full JUnit suite.
+- `scripts/test.sh complexity.IsSortedTest` — compiles everything and runs one
+  test class only. Use this while you are working on one problem and the
+  others are still empty. The class names are listed in the layout above.
 
 ## What's here
 

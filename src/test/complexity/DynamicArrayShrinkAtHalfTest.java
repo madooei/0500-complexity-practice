@@ -1,7 +1,7 @@
 package complexity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,46 +13,51 @@ import org.junit.jupiter.api.Test;
 public class DynamicArrayShrinkAtHalfTest {
 
   private static DynamicArrayShrinkAtHalf filled(int count) {
-    DynamicArrayShrinkAtHalf a = new DynamicArrayShrinkAtHalf();
+    DynamicArrayShrinkAtHalf array = new DynamicArrayShrinkAtHalf();
     for (int i = 0; i < count; i++) {
-      a.add(i);
+      array.add(i);
     }
-    return a;
+    return array;
   }
 
   @Test
   public void removeLastReturnsLastAndShrinksSize() {
-    DynamicArrayShrinkAtHalf a = filled(3);
-    assertEquals(2, a.removeLast());
-    assertEquals(2, a.size());
-    assertEquals(1, a.get(1));
+    DynamicArrayShrinkAtHalf array = filled(3);
+    assertEquals(2, array.removeLast());
+    assertEquals(2, array.size());
+    assertEquals(1, array.get(1));
   }
 
   @Test
   public void removeLastOnEmptyThrows() {
-    DynamicArrayShrinkAtHalf a = new DynamicArrayShrinkAtHalf();
-    assertThrows(IllegalStateException.class, a::removeLast);
+    DynamicArrayShrinkAtHalf array = new DynamicArrayShrinkAtHalf();
+    try {
+      array.removeLast();
+      fail("Failed to throw IllegalStateException");
+    } catch (IllegalStateException e) {
+      return;
+    }
   }
 
   @Test
   public void neverShrinksBelowStartingCapacity() {
-    DynamicArrayShrinkAtHalf a = filled(10);
-    while (a.size() > 0) {
-      a.removeLast();
+    DynamicArrayShrinkAtHalf array = filled(10);
+    while (array.size() > 0) {
+      array.removeLast();
     }
-    assertEquals(10, a.capacity());
+    assertEquals(10, array.capacity());
   }
 
   @Test
   public void alternatingCallsResizeEveryTime() {
-    DynamicArrayShrinkAtHalf a = filled(10);   // full at capacity 10
-    a.add(10);                                 // grows to 20, half full
-    assertEquals(20, a.capacity());
-    a.removeLast();                            // half empty: shrinks to 10
-    assertEquals(10, a.capacity());
-    a.add(10);                                 // full again: grows to 20
-    assertEquals(20, a.capacity());
-    a.removeLast();                            // and shrinks again
-    assertEquals(10, a.capacity());
+    DynamicArrayShrinkAtHalf array = filled(10);  // full at capacity 10
+    array.add(10);                                // grows to 20, half full
+    assertEquals(20, array.capacity());
+    array.removeLast();                           // half empty: shrinks to 10
+    assertEquals(10, array.capacity());
+    array.add(10);                                // full again: grows to 20
+    assertEquals(20, array.capacity());
+    array.removeLast();                           // and shrinks again
+    assertEquals(10, array.capacity());
   }
 }

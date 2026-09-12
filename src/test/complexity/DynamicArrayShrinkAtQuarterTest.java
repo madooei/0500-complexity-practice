@@ -1,7 +1,7 @@
 package complexity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,60 +13,65 @@ import org.junit.jupiter.api.Test;
 public class DynamicArrayShrinkAtQuarterTest {
 
   private static DynamicArrayShrinkAtQuarter filled(int count) {
-    DynamicArrayShrinkAtQuarter a = new DynamicArrayShrinkAtQuarter();
+    DynamicArrayShrinkAtQuarter array = new DynamicArrayShrinkAtQuarter();
     for (int i = 0; i < count; i++) {
-      a.add(i);
+      array.add(i);
     }
-    return a;
+    return array;
   }
 
   @Test
   public void removeLastReturnsLastAndShrinksSize() {
-    DynamicArrayShrinkAtQuarter a = filled(3);
-    assertEquals(2, a.removeLast());
-    assertEquals(2, a.size());
-    assertEquals(1, a.get(1));
+    DynamicArrayShrinkAtQuarter array = filled(3);
+    assertEquals(2, array.removeLast());
+    assertEquals(2, array.size());
+    assertEquals(1, array.get(1));
   }
 
   @Test
   public void removeLastOnEmptyThrows() {
-    DynamicArrayShrinkAtQuarter a = new DynamicArrayShrinkAtQuarter();
-    assertThrows(IllegalStateException.class, a::removeLast);
+    DynamicArrayShrinkAtQuarter array = new DynamicArrayShrinkAtQuarter();
+    try {
+      array.removeLast();
+      fail("Failed to throw IllegalStateException");
+    } catch (IllegalStateException e) {
+      return;
+    }
   }
 
   @Test
   public void alternatingCallsDoNotResize() {
-    DynamicArrayShrinkAtQuarter a = filled(11);  // grew to 20 on the 11th add
-    assertEquals(20, a.capacity());
+    DynamicArrayShrinkAtQuarter array = filled(11);  // grew to 20 on the 11th add
+    assertEquals(20, array.capacity());
     for (int i = 0; i < 5; i++) {
-      a.removeLast();
-      assertEquals(20, a.capacity());
-      a.add(99);
-      assertEquals(20, a.capacity());
+      array.removeLast();
+      assertEquals(20, array.capacity());
+      array.add(99);
+      assertEquals(20, array.capacity());
     }
   }
 
   @Test
   public void shrinksAtQuarterFullAndLandsHalfFull() {
-    DynamicArrayShrinkAtQuarter a = filled(11);  // size 11, capacity 20
-    while (a.size() > 6) {
-      a.removeLast();
+    DynamicArrayShrinkAtQuarter array = filled(11);  // size 11, capacity 20
+    while (array.size() > 6) {
+      array.removeLast();
     }
-    assertEquals(20, a.capacity());              // size 6 is above a quarter
-    a.removeLast();                              // size 5 == 20 / 4
-    assertEquals(10, a.capacity());
-    assertEquals(5, a.size());
+    assertEquals(20, array.capacity());              // size 6 is above a quarter
+    array.removeLast();                              // size 5 == 20 / 4
+    assertEquals(10, array.capacity());
+    assertEquals(5, array.size());
     for (int i = 0; i < 5; i++) {
-      assertEquals(i, a.get(i));                 // elements survived the copy
+      assertEquals(i, array.get(i));                 // elements survived the copy
     }
   }
 
   @Test
   public void neverShrinksBelowStartingCapacity() {
-    DynamicArrayShrinkAtQuarter a = filled(11);
-    while (a.size() > 0) {
-      a.removeLast();
+    DynamicArrayShrinkAtQuarter array = filled(11);
+    while (array.size() > 0) {
+      array.removeLast();
     }
-    assertEquals(10, a.capacity());
+    assertEquals(10, array.capacity());
   }
 }

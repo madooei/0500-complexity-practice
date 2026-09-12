@@ -1,9 +1,8 @@
 package complexity;
 
 /**
- * A growable array of ints that also shrinks, using the naive rule: halve the
- * capacity as soon as the array is half empty. This rule lets alternating add
- * and removeLast calls resize on every call, so both are O(n) amortized.
+ * A growable array of ints that also shrinks, halving the capacity as soon as
+ * the array is half empty.
  */
 public class DynamicArrayShrinkAtHalf {
 
@@ -42,7 +41,6 @@ public class DynamicArrayShrinkAtHalf {
   }
 
   // Removes and returns the last element. Throws if the array is empty.
-  // Shrinks as soon as the array is half empty.
   public int removeLast() {
     if (size == 0) {
       throw new IllegalStateException();

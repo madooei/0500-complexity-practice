@@ -27,8 +27,8 @@ public class FibonacciTest {
 
   @Test
   public void largeValues() {
-    // fib(45) is the largest that fits in an int without overflow trouble
+    // fib(46) is the largest that fits in an int; fib(47) overflows
     assertEquals(832040, Fibonacci.fib(30));
-    assertEquals(1134903170, Fibonacci.fib(45));
+    assertEquals(1836311903, Fibonacci.fib(46));
   }
 }
