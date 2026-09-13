@@ -43,5 +43,5 @@ code/
   private helper.
 - `complexity.DynamicArray` — the `DynamicArray` from the first chapter with a
   `removeLast` that gives capacity back. `grow` and `shrink` both use
-  `GROWTH_FACTOR`; `shrink` fires only when the array is one `SHRINK_FACTOR`-th
+  `RESIZE_FACTOR`; `shrink` fires only when the array is one `SHRINK_THRESHOLD`-th
   full, so every resize leaves it half full.
