@@ -16,11 +16,11 @@ public class DynamicArrayTest {
   // The three constants the class is built on, read through reflection so
   // the expected numbers below follow the class if a constant changes.
   private static final int MIN_CAPACITY = readStaticInt("MIN_CAPACITY");
-  private static final int GROWTH_FACTOR = readStaticInt("GROWTH_FACTOR");
-  private static final int SHRINK_FACTOR = readStaticInt("SHRINK_FACTOR");
+  private static final int RESIZE_FACTOR = readStaticInt("RESIZE_FACTOR");
+  private static final int SHRINK_THRESHOLD = readStaticInt("SHRINK_THRESHOLD");
 
   // The capacity right after the first grow.
-  private static final int GROWN = MIN_CAPACITY * GROWTH_FACTOR;
+  private static final int GROWN = MIN_CAPACITY * RESIZE_FACTOR;
 
   private static DynamicArray filled(int count) {
     DynamicArray array = new DynamicArray();
@@ -87,13 +87,13 @@ public class DynamicArrayTest {
   @Test
   public void shrinksAtQuarterFullAndLandsHalfFull() {
     DynamicArray array = filled(MIN_CAPACITY + 1);
-    int threshold = GROWN / SHRINK_FACTOR;
+    int threshold = GROWN / SHRINK_THRESHOLD;
     while (array.size() > threshold + 1) {
       array.removeLast();
     }
     assertEquals(GROWN, capacity(array));  // one above the threshold: no shrink
     array.removeLast();                    // now exactly at the threshold
-    assertEquals(GROWN / GROWTH_FACTOR, capacity(array));
+    assertEquals(GROWN / RESIZE_FACTOR, capacity(array));
     assertEquals(threshold, array.size());
     for (int i = 0; i < threshold; i++) {
       assertEquals(i, array.get(i));       // elements survived the copy

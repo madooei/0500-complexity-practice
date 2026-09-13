@@ -3,11 +3,11 @@ package complexity;
 /** A growable array of ints that also shrinks. */
 public class DynamicArray {
 
-  private static final int MIN_CAPACITY = 10;
+  private static final int MIN_CAPACITY = 8;
   // grow multiplies the capacity by this, and shrink divides it by this
-  private static final int GROWTH_FACTOR = 2;
-  // shrink fires when size falls to capacity / SHRINK_FACTOR
-  private static final int SHRINK_FACTOR = 4;
+  private static final int RESIZE_FACTOR = 2;
+  // shrink fires when size falls to capacity / SHRINK_THRESHOLD
+  private static final int SHRINK_THRESHOLD = 4;
 
   private int[] arr;
   private int size;
@@ -45,24 +45,24 @@ public class DynamicArray {
     size--;
     int value = arr[size];
     arr[size] = 0;           // clear the now-unused slot
-    if (size == arr.length / SHRINK_FACTOR && arr.length > MIN_CAPACITY) {
+    if (size == arr.length / SHRINK_THRESHOLD && arr.length > MIN_CAPACITY) {
       shrink();
     }
     return value;
   }
 
-  // Multiplies the capacity by GROWTH_FACTOR.
+  // Multiplies the capacity by RESIZE_FACTOR.
   private void grow() {
-    int[] bigger = new int[arr.length * GROWTH_FACTOR];
+    int[] bigger = new int[arr.length * RESIZE_FACTOR];
     for (int i = 0; i < size; i++) {
       bigger[i] = arr[i];
     }
     arr = bigger;
   }
 
-  // Divides the capacity by GROWTH_FACTOR.
+  // Divides the capacity by RESIZE_FACTOR.
   private void shrink() {
-    int[] smaller = new int[arr.length / GROWTH_FACTOR];
+    int[] smaller = new int[arr.length / RESIZE_FACTOR];
     for (int i = 0; i < size; i++) {
       smaller[i] = arr[i];
     }
