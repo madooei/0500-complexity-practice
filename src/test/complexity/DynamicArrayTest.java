@@ -13,12 +13,31 @@ import org.junit.jupiter.api.Test;
  */
 public class DynamicArrayTest {
 
+  // The three constants the class is built on, read through reflection so
+  // the expected numbers below follow the class if a constant changes.
+  private static final int MIN_CAPACITY = readStaticInt("MIN_CAPACITY");
+  private static final int GROWTH_FACTOR = readStaticInt("GROWTH_FACTOR");
+  private static final int SHRINK_FACTOR = readStaticInt("SHRINK_FACTOR");
+
+  // The capacity right after the first grow.
+  private static final int GROWN = MIN_CAPACITY * GROWTH_FACTOR;
+
   private static DynamicArray filled(int count) {
     DynamicArray array = new DynamicArray();
     for (int i = 0; i < count; i++) {
       array.add(i);
     }
     return array;
+  }
+
+  private static int readStaticInt(String name) {
+    try {
+      Field field = DynamicArray.class.getDeclaredField(name);
+      field.setAccessible(true);
+      return field.getInt(null);
+    } catch (ReflectiveOperationException e) {
+      throw new IllegalStateException("DynamicArray has no constant " + name);
+    }
   }
 
   // Reads the length of the private backing array through reflection, so the
@@ -55,37 +74,38 @@ public class DynamicArrayTest {
 
   @Test
   public void alternatingCallsDoNotResize() {
-    DynamicArray array = filled(11);  // grew to 20 on the 11th add
-    assertEquals(20, capacity(array));
+    DynamicArray array = filled(MIN_CAPACITY + 1);  // one add past full: grew
+    assertEquals(GROWN, capacity(array));
     for (int i = 0; i < 5; i++) {
       array.removeLast();
-      assertEquals(20, capacity(array));
+      assertEquals(GROWN, capacity(array));
       array.add(99);
-      assertEquals(20, capacity(array));
+      assertEquals(GROWN, capacity(array));
     }
   }
 
   @Test
   public void shrinksAtQuarterFullAndLandsHalfFull() {
-    DynamicArray array = filled(11);  // size 11, capacity 20
-    while (array.size() > 6) {
+    DynamicArray array = filled(MIN_CAPACITY + 1);
+    int threshold = GROWN / SHRINK_FACTOR;
+    while (array.size() > threshold + 1) {
       array.removeLast();
     }
-    assertEquals(20, capacity(array));  // size 6 is above a quarter
-    array.removeLast();                  // size 5 == 20 / 4
-    assertEquals(10, capacity(array));
-    assertEquals(5, array.size());
-    for (int i = 0; i < 5; i++) {
-      assertEquals(i, array.get(i));     // elements survived the copy
+    assertEquals(GROWN, capacity(array));  // one above the threshold: no shrink
+    array.removeLast();                    // now exactly at the threshold
+    assertEquals(GROWN / GROWTH_FACTOR, capacity(array));
+    assertEquals(threshold, array.size());
+    for (int i = 0; i < threshold; i++) {
+      assertEquals(i, array.get(i));       // elements survived the copy
     }
   }
 
   @Test
   public void neverShrinksBelowStartingCapacity() {
-    DynamicArray array = filled(11);
+    DynamicArray array = filled(MIN_CAPACITY + 1);
     while (array.size() > 0) {
       array.removeLast();
     }
-    assertEquals(10, capacity(array));
+    assertEquals(MIN_CAPACITY, capacity(array));
   }
 }
