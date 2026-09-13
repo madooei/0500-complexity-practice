@@ -36,11 +36,6 @@ public class DynamicArray {
     return size;
   }
 
-  // The length of the backing array. Exposed so we can watch grow and shrink.
-  public int capacity() {
-    return arr.length;
-  }
-
   // Removes and returns the last element.
   // Throws IllegalStateException if the array is empty.
   public int removeLast() {
