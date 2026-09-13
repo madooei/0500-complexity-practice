@@ -41,7 +41,8 @@ public class DynamicArray {
     return arr.length;
   }
 
-  // Removes and returns the last element. Throws if the array is empty.
+  // Removes and returns the last element.
+  // Throws IllegalStateException if the array is empty.
   public int removeLast() {
     // TODO: Implement me
     throw new UnsupportedOperationException("TODO: Implement me");
