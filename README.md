@@ -20,20 +20,26 @@ code/
       complexity/
         Fibonacci.java        # recursive fib with an array cache
         DynamicArray.java     # grows on add, shrinks on removeLast
+      demo/                   # one demo per solution class
+        FibonacciDemo.java
+        DynamicArrayDemo.java
     test/
       complexity/
         FibonacciTest.java
         DynamicArrayTest.java
   scripts/
     test.sh                   # compile everything and run the JUnit tests
+    run.sh                    # compile everything and run one demo
 ```
 
 ## How to compile and run
 
 - `scripts/test.sh` — compiles everything and runs the full JUnit suite.
 - `scripts/test.sh complexity.FibonacciTest` — compiles everything and runs one test class only. Use this while you are working on one problem and the other is still empty. The class names are listed in the layout above.
+- `scripts/run.sh demo.FibonacciDemo` — compiles everything and runs that one demo. Every class you implement has its own demo, `<Class>Demo`.
 
 ## What's here
 
 - `complexity.Fibonacci` — `fib`, top-down memoized with an `int[]` cache and a private helper.
 - `complexity.DynamicArray` — the `DynamicArray` from the first chapter with a `removeLast` that gives capacity back. `grow` and `shrink` both use `RESIZE_FACTOR`; `shrink` fires only when the array is one `SHRINK_THRESHOLD`-th full, so every resize leaves it half full.
+- `demo.FibonacciDemo` and `demo.DynamicArrayDemo` — one demo per solution class, each on a small example from the notes.
